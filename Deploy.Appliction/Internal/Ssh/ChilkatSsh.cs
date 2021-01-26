@@ -1,13 +1,12 @@
 ﻿using System.Collections.Concurrent;
-using Chilkat;
 using Deploy.Appliction.Config;
 using Microsoft.Extensions.Logging;
 
-namespace Deploy.Appliction.Internal
+namespace Deploy.Appliction.Internal.Ssh
 {
     public class ChilkatSsh
     {
-        public static readonly ConcurrentDictionary<string, Ssh> SshDictionary = new ConcurrentDictionary<string, Ssh>();
+        public static readonly ConcurrentDictionary<string, Chilkat.Ssh> SshDictionary = new ConcurrentDictionary<string, Chilkat.Ssh>();
         private readonly ILogger<ChilkatSsh> _logger;
 
         protected ChilkatSsh(ILogger<ChilkatSsh> logger)
@@ -16,7 +15,7 @@ namespace Deploy.Appliction.Internal
             SshDictionary.TryAdd("ssh", CreateSshClient());
         }
 
-        protected Ssh CreateSshClient()
+        protected Chilkat.Ssh CreateSshClient()
         {
             var ssh = new Chilkat.Ssh()
             {
