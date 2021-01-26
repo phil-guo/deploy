@@ -1,5 +1,7 @@
 ﻿using System;
 using Autofac;
+using Deploy.Appliction.Internal;
+using Deploy.Appliction.Internal.Ssh;
 
 namespace Deploy.Appliction
 {
@@ -7,7 +9,7 @@ namespace Deploy.Appliction
     {
         protected override void Load(ContainerBuilder builder)
         {
-            base.Load(builder);
+            builder.RegisterType<ChilkatSsh>().As<ISsh>();
         }
     }
 }

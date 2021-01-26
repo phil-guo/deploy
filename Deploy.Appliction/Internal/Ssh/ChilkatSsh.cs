@@ -4,18 +4,20 @@ using Microsoft.Extensions.Logging;
 
 namespace Deploy.Appliction.Internal.Ssh
 {
-    public class ChilkatSsh
+    public class ChilkatSsh : ISsh
     {
-        public static readonly ConcurrentDictionary<string, Chilkat.Ssh> SshDictionary = new ConcurrentDictionary<string, Chilkat.Ssh>();
+        private static readonly ConcurrentDictionary<string, Chilkat.Ssh> SshDictionary =
+            new ConcurrentDictionary<string, Chilkat.Ssh>();
+
         private readonly ILogger<ChilkatSsh> _logger;
 
-        protected ChilkatSsh(ILogger<ChilkatSsh> logger)
+        public ChilkatSsh(ILogger<ChilkatSsh> logger)
         {
             _logger = logger;
             SshDictionary.TryAdd("ssh", CreateSshClient());
         }
 
-        protected Chilkat.Ssh CreateSshClient()
+        private Chilkat.Ssh CreateSshClient()
         {
             var ssh = new Chilkat.Ssh()
             {
@@ -35,6 +37,38 @@ namespace Deploy.Appliction.Internal.Ssh
                 return null;
 
             return ssh;
+        }
+
+        public void SendCommands(string cmd)
+        {
+            SshDictionary.TryGetValue("ssh", out var ssh);
+            if (ssh == null)
+                _logger.LogInformation("没有ssh上下文 请先创建ssh上下文");
+
+            var channelNum = ssh.OpenSessionChannel();
+            if (channelNum < 0)
+                _logger.LogInformation(ssh.LastErrorText);
+
+            var success = ssh.SendReqExec(channelNum, cmd);
+
+            if (!success)
+                _logger.LogInformation(ssh.LastErrorText);
+
+            success = ssh.ChannelReceiveToClose(channelNum);
+            if (!success)
+                _logger.LogInformation(ssh.LastErrorText);
+
+            // var cmdOutput = ssh.GetReceivedText(channelNum, cmd);
+            // if (!ssh.LastMethodSuccess)
+            //     _logger.LogInformation(ssh.LastErrorText);
+            //
+            // _logger.LogInformation(cmdOutput);
+        }
+
+
+        public void Dispose()
+        {
+            SshDictionary["ssh"].Disconnect();
         }
     }
 }

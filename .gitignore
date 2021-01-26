@@ -4,6 +4,7 @@ logs/
 Upload/
 packages/
 .vs/
+.idea/
 LocalData.xml
 *.suo
 *.user
@@ -18,3 +19,4 @@ node_modules/
 /EQuality/EP防错测试工具/RESULTS/1/20180823
 /EQuality/EP防错测试工具/log/T1
 /EQuality/EQuality.SITSync/WindowsService
+/.idea/.idea.Deploy/.idea/.name
