@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Autofac;
+using Deploy.Appliction;
 
 namespace Deploy.Wpf
 {
@@ -22,7 +24,21 @@ namespace Deploy.Wpf
     {
         public MainWindow()
         {
+            SetUpContainer();
+
             InitializeComponent();
+        }
+
+        private void SetUpContainer()
+        {
+            var builder = new ContainerBuilder();
+            BuildUpContainer(builder);
+            var container = builder.Build();
+        }
+
+        private void BuildUpContainer(ContainerBuilder builder)
+        {
+            builder.RegisterModule<ApplicationModule>();
         }
     }
 }
