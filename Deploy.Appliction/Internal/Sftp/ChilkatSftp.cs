@@ -68,5 +68,47 @@ namespace Deploy.Appliction.Internal.Sftp
             if (!success)
                 _logger.LogInformation(sftp.LastErrorText);
         }
+
+        public bool FileDirectoryExists(string path)
+        {
+            //返回值是以下值之一：
+            // -1：无法检查。检查LastErrorText以确定失败的原因。
+            // 0：文件不存在。
+            // 1：常规文件存在。
+            // 2：存在，但它是目录。
+            // 3：存在，但它是一个符号链接（仅当followLinks为false时才可能）
+            // 4：存在，但它是一种特殊的文件系统条目类型。
+            // 5：它存在，但是它是一个未知的文件系统条目类型。
+            // 6：存在，但是它是套接字文件系统条目类型。
+            // 7：存在，但是它是字符设备条目类型。
+            // 8：存在，但是它是块设备条目类型。
+            // 9：存在，但是它是FIFO条目类型
+
+            SftpDictionary.TryGetValue(Name, out var sftp);
+            if (sftp == null)
+            {
+                _logger.LogInformation("sftp 没有创建链接");
+                return false;
+            }
+
+            var followLinks = true;
+            var status = sftp.FileExists(path, followLinks);
+
+            return status == 2;
+        }
+
+        public void CreateFileDirectory(string path)
+        {
+            SftpDictionary.TryGetValue(Name, out var sftp);
+            if (sftp == null)
+            {
+                _logger.LogInformation("sftp 没有创建链接");
+                return;
+            }
+            var success = sftp.CreateDir(path);
+
+            if (!success)
+                _logger.LogInformation(sftp.LastErrorText);
+        }
     }
 }
