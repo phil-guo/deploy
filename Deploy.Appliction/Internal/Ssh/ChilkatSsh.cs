@@ -9,12 +9,15 @@ namespace Deploy.Appliction.Internal.Ssh
         private static readonly ConcurrentDictionary<string, Chilkat.Ssh> SshDictionary =
             new ConcurrentDictionary<string, Chilkat.Ssh>();
 
+        private const string Name = "ssh";
+
         private readonly ILogger<ChilkatSsh> _logger;
 
         public ChilkatSsh(ILogger<ChilkatSsh> logger)
         {
             _logger = logger;
-            SshDictionary.TryAdd("ssh", CreateSshClient());
+            if (!SshDictionary.TryGetValue(Name, out var ssh))
+                SshDictionary.TryAdd(Name, CreateSshClient());
         }
 
         private Chilkat.Ssh CreateSshClient()
@@ -41,7 +44,7 @@ namespace Deploy.Appliction.Internal.Ssh
 
         public void SendCommands(string cmd)
         {
-            SshDictionary.TryGetValue("ssh", out var ssh);
+            SshDictionary.TryGetValue(Name, out var ssh);
             if (ssh == null)
                 _logger.LogInformation("没有ssh上下文 请先创建ssh上下文");
 
@@ -68,7 +71,7 @@ namespace Deploy.Appliction.Internal.Ssh
 
         public void Dispose()
         {
-            SshDictionary["ssh"].Disconnect();
+            SshDictionary[Name].Disconnect();
         }
     }
 }
