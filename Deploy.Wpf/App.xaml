@@ -13,6 +13,8 @@
                 <ResourceDictionary
                     Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Light.Blue.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <DataTemplate x:Key="HamburgerMenuItem" />
+            <DataTemplate x:Key="HamburgerOptionsMenuItem" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

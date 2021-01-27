@@ -41,5 +41,15 @@ namespace Deploy.Wpf
         {
             builder.RegisterModule<ApplicationModule>();
         }
+
+        private void LaunchGitHubSite(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("explorer.exe", "https://github.com/simple-gr/deploy");
+        }
+
+        private void HamburgerMenuControl_OnItemInvoked(object sender, HamburgerMenuItemInvokedEventArgs args)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

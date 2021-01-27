@@ -4,12 +4,124 @@
                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                  xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                 xmlns:converters="http://metro.mahapps.com/winfx/xaml/controls"
                  Title="Deploy"
                  Width="800"
                  Height="450"
                  WindowStartupLocation="CenterScreen"
+                 WindowTransitionsEnabled="False"
                  mc:Ignorable="d">
-    <Grid>
-        <!--  Your content  -->
-    </Grid>
+    <mah:MetroWindow.LeftWindowCommands>
+        <mah:WindowCommands>
+            <Button Click="LaunchGitHubSite" ToolTip="Open up the GitHub site">
+                <iconPacks:PackIconModern Width="22"
+                                          Height="22"
+                                          Kind="SocialGithubOctocat" />
+            </Button>
+        </mah:WindowCommands>
+    </mah:MetroWindow.LeftWindowCommands>
+
+    <mah:MetroWindow.Resources>
+        <ResourceDictionary>
+
+            <!--  Place for the DataTemplates for the menu items (see below)  -->
+
+        </ResourceDictionary>
+    </mah:MetroWindow.Resources>
+
+    <mah:HamburgerMenu x:Name="HamburgerMenuControl"
+                       DisplayMode="CompactOverlay"
+                       HamburgerWidth="0"
+                       ItemInvoked="HamburgerMenuControl_OnItemInvoked"
+                       ItemTemplate="{StaticResource HamburgerMenuItem}"
+                       OptionsItemTemplate="{StaticResource HamburgerOptionsMenuItem}">
+
+        <!--  Header  -->
+        <!--<mah:HamburgerMenu.HamburgerMenuHeaderTemplate>
+            <DataTemplate>
+                <TextBlock HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           FontSize="16"
+                           Foreground="White"
+                           Text="Pictures" />
+            </DataTemplate>
+        </mah:HamburgerMenu.HamburgerMenuHeaderTemplate>-->
+
+        <!--  Items  -->
+        <!--<mah:HamburgerMenu.ItemsSource>
+            <mah:HamburgerMenuItemCollection>
+                <mah:HamburgerMenuGlyphItem Glyph="/Assets/Photos/BigFourSummerHeat.png" Label="Big four summer heat" />
+                <mah:HamburgerMenuGlyphItem Glyph="/Assets/Photos/BisonBadlandsChillin.png" Label="Bison badlands Chillin" />
+                <mah:HamburgerMenuGlyphItem Glyph="/Assets/Photos/GiantSlabInOregon.png" Label="Giant slab in Oregon" />
+                <mah:HamburgerMenuGlyphItem Glyph="/Assets/Photos/LakeAnnMushroom.png" Label="Lake Ann Mushroom" />
+            </mah:HamburgerMenuItemCollection>
+        </mah:HamburgerMenu.ItemsSource>-->
+
+        <!--  Options  -->
+        <mah:HamburgerMenu.OptionsItemsSource>
+            <mah:HamburgerMenuItemCollection>
+
+                <mah:HamburgerMenuIconItem Label="About">
+                    <mah:HamburgerMenuIconItem.Icon>
+                        <iconPacks:PackIconMaterial Width="22"
+                                                    Height="22"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Kind="Help" />
+                    </mah:HamburgerMenuIconItem.Icon>
+                    <mah:HamburgerMenuIconItem.Tag>
+                        <TextBlock HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   FontSize="28"
+                                   FontWeight="Bold">
+                            About
+                        </TextBlock>
+                    </mah:HamburgerMenuIconItem.Tag>
+                </mah:HamburgerMenuIconItem>
+
+            </mah:HamburgerMenuItemCollection>
+        </mah:HamburgerMenu.OptionsItemsSource>
+
+        <!--  Content  -->
+        <mah:HamburgerMenu.ContentTemplate>
+            <DataTemplate>
+                <Grid x:Name="ContentGrid">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="48" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Border Grid.Row="0"
+                            Margin="-1 0 -1 0"
+                            Background="#7A7A7A">
+                        <TextBlock x:Name="Header"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   FontSize="24"
+                                   Foreground="White"
+                                   Text="{Binding Label}" />
+                    </Border>
+                    <mah:TransitioningContentControl Grid.Row="1"
+                                                          Content="{Binding}"
+                                                          RestartTransitionOnContentChange="True"
+                                                          Transition="Default">
+
+                        <mah:TransitioningContentControl.Resources>
+                            <DataTemplate DataType="{x:Type mah:HamburgerMenuGlyphItem}">
+                                <Image Source="{Binding Glyph, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}" />
+                            </DataTemplate>
+
+                            <DataTemplate DataType="{x:Type mah:HamburgerMenuIconItem}">
+                                <ContentControl Content="{Binding Tag, Mode=OneWay}"
+                                                Focusable="True"
+                                                IsTabStop="False" />
+                            </DataTemplate>
+                        </mah:TransitioningContentControl.Resources>
+
+                    </mah:TransitioningContentControl>
+                </Grid>
+            </DataTemplate>
+        </mah:HamburgerMenu.ContentTemplate>
+
+    </mah:HamburgerMenu>
 </mah:MetroWindow>
