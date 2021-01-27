@@ -7,5 +7,7 @@
         public int TimeOutMs { get; set; } = 5000;
         public string Root { get; set; } = "root";
         public string Password { get; set; } = "qwe123QWE";
+        public string LocalPath { get; set; }
+        public string RemotePath { get; set; } = "/home/wwwroot";
     }
 }

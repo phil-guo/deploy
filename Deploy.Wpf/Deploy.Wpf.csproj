@@ -10,4 +10,8 @@
       <ProjectReference Include="..\Deploy.Appliction\Deploy.Appliction.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="MahApps.Metro" Version="2.4.3" />
+    </ItemGroup>
+
 </Project>
