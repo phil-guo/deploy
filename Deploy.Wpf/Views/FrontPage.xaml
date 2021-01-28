@@ -12,18 +12,18 @@
       mc:Ignorable="d">
 
     <Grid>
-        <Label Width="40"
+        <Label Width="70"
                Height="30"
-               Margin="10,10,0,0"
+               Margin="20,10,0,0"
                HorizontalAlignment="Left"
                VerticalAlignment="Top">
             主机：
         </Label>
         <TextBox mah:TextBoxHelper.Watermark="主机"
                  Name="Host"
-                 Width="200"
+                 Width="170"
                  Height="20"
-                 Margin="50,10,0,0"
+                 Margin="80,10,0,0"
                  HorizontalAlignment="Left"
                  VerticalAlignment="Top" />
 
@@ -34,12 +34,94 @@
                VerticalAlignment="Top">
             端口：
         </Label>
-        <TextBox mah:TextBoxHelper.Watermark="端口"
+        <TextBox mah:TextBoxHelper.Watermark="宿主机:容器"
                  Name="Port"
                  Width="80"
                  Height="20"
                  Margin="300,10,0,0"
                  HorizontalAlignment="Left"
                  VerticalAlignment="Top" />
+
+        <Label Width="40"
+               Height="30"
+               Margin="390,10,0,0"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top">
+            用户：
+        </Label>
+        <TextBox mah:TextBoxHelper.Watermark="用户名"
+                 Name="UserName"
+                 Width="80"
+                 Height="20"
+                 Margin="430,10,0,0"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top" />
+        <Label Width="40"
+               Height="30"
+               Margin="520,10,0,0"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top">
+            密码：
+        </Label>
+        <TextBox mah:TextBoxHelper.Watermark="服务器密码"
+                 Name="Password"
+                 Width="180"
+                 Height="20"
+                 Margin="560,10,0,0"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top" />
+
+        <Label Width="70"
+               Height="30"
+               Margin="10,40,0,0"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top">
+            本地路径：
+        </Label>
+        <TextBox mah:TextBoxHelper.Watermark="本地路径"
+                 Name="LocalPath"
+                 Width="270"
+                 Height="20"
+                 Margin="80,40,0,0"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top" />
+
+        <Label Width="70"
+               Height="30"
+               Margin="360,40,0,0"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top">
+            远程路径：
+        </Label>
+        <TextBox mah:TextBoxHelper.Watermark="远程同步目录路径"
+                 Name="RemotePath"
+                 Width="310"
+                 Height="20"
+                 Margin="430,40,0,0"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top" />
+
+        <Button Width="80"
+                Height="30"
+                Margin="0,70,10,0"
+                Background="DodgerBlue"
+                HorizontalAlignment="Right"
+                Click="Deploy_Click"
+                VerticalAlignment="Top">
+            发布
+        </Button>
+
+        <TextBox
+            Name="Display"
+            Width="740"
+            Height="300"
+            Margin="10,0,10,10"
+            VerticalAlignment="Bottom"
+            TextWrapping="Wrap"
+            VerticalScrollBarVisibility="Visible"
+            AcceptsReturn="True"
+            >
+            <!-- 你奶发生的看哈肯定会发客 \r\n 大水饭卡手动阀十分卡回复框上的饭卡上返回 -->
+        </TextBox>
     </Grid>
 </Page>
