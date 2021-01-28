@@ -9,21 +9,21 @@
       d:DesignWidth="300"
       mc:Ignorable="d">
 
-    <StackPanel HorizontalAlignment="Center"
-                VerticalAlignment="Top"
-                Orientation="Vertical">
-        <TextBlock Margin="24"
-                   HorizontalAlignment="Center"
-                   FontSize="48"
-                   Text="MahApps.Metro" />
-        <iconPacks:PackIconMaterial Width="128"
-                                    Height="128"
-                                    HorizontalAlignment="Center"
-                                    Foreground="{DynamicResource MahApps.Brushes.AccentBase}"
-                                    Kind="Hamburger" />
-        <TextBlock Margin="24"
-                   HorizontalAlignment="Center"
-                   FontSize="48"
-                   Text="Frame Navigation" />
-    </StackPanel>
+    <!-- <StackPanel HorizontalAlignment="Center" -->
+    <!--             VerticalAlignment="Top" -->
+    <!--             Orientation="Vertical"> -->
+    <!--     <TextBlock Margin="24" -->
+    <!--                HorizontalAlignment="Center" -->
+    <!--                FontSize="48" -->
+    <!--                Text="MahApps.Metro" /> -->
+    <!--     <iconPacks:PackIconMaterial Width="128" -->
+    <!--                                 Height="128" -->
+    <!--                                 HorizontalAlignment="Center" -->
+    <!--                                 Foreground="{DynamicResource MahApps.Brushes.AccentBase}" -->
+    <!--                                 Kind="Hamburger" /> -->
+    <!--     <TextBlock Margin="24" -->
+    <!--                HorizontalAlignment="Center" -->
+    <!--                FontSize="48" -->
+    <!--                Text="Frame Navigation" /> -->
+    <!-- </StackPanel> -->
 </Page>

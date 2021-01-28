@@ -28,6 +28,7 @@ namespace Deploy.Wpf
             // Navigate to the home page.
             this.Loaded += (sender, args) =>
                 this.navigationServiceEx.Navigate(new Uri("Views/MainPage.xaml", UriKind.RelativeOrAbsolute));
+            
         }
 
         private void NavigationServiceEx_OnNavigated(object sender, NavigationEventArgs e)

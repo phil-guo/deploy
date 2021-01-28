@@ -4,6 +4,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
       Title="前端"
       d:DesignHeight="300"
       d:DesignWidth="300"
@@ -11,14 +12,34 @@
       mc:Ignorable="d">
 
     <Grid>
+        <Label Width="40"
+               Height="30"
+               Margin="10,10,0,0"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top">
+            主机：
+        </Label>
+        <TextBox mah:TextBoxHelper.Watermark="主机"
+                 Name="Host"
+                 Width="200"
+                 Height="20"
+                 Margin="50,10,0,0"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top" />
 
-        <iconPacks:PackIconFontAwesome Width="48"
-                                       Height="48"
-                                       Margin="10"
-                                       HorizontalAlignment="Right"
-                                       VerticalAlignment="Top"
-                                       Foreground="{DynamicResource MahApps.Brushes.AccentBase}"
-                                       Kind="BugSolid" />
-
+        <Label Width="40"
+               Height="30"
+               Margin="260,10,0,0"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top">
+            端口：
+        </Label>
+        <TextBox mah:TextBoxHelper.Watermark="端口"
+                 Name="Port"
+                 Width="80"
+                 Height="20"
+                 Margin="300,10,0,0"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top" />
     </Grid>
 </Page>
