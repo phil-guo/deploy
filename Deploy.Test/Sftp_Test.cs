@@ -17,7 +17,7 @@ namespace Deploy.Test
         [Fact(DisplayName = "同步目录树")]
         public void SyncTreeUpload_Test()
         {
-            var localPath = @"D:\test";
+            var localPath = @"D:\Code\test";
             var remotePath = "/home/wwwroot";
             _sftp.SyncTreeUpload(remotePath, localPath);
         }

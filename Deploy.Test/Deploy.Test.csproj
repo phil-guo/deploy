@@ -23,4 +23,16 @@
       <ProjectReference Include="..\Deploy.Application\Deploy.Application.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="Config\front\Dockerfile">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="Config\front\nginx.conf">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="Config\appsettings.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>

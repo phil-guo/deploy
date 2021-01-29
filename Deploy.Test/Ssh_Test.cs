@@ -17,9 +17,12 @@ namespace Deploy.Test
         [Fact(DisplayName = "发送shell命令")]
         public void SendCommands_Test()
         {
-            _ssh.SendCommands("docker stop gr");
-            _ssh.SendCommands("docker rm gr");
-            _ssh.SendCommands("docker run -itd --name=gr -p 9001:80 gl");
+            // _ssh.SendCommands("docker stop gr");
+            // _ssh.SendCommands("docker rm gr");
+            // _ssh.SendCommands("docker run -itd --name=gr -p 9001:80 gl");
+            
+            _ssh.SendCommands("cd /root/wwwroot");
+            _ssh.SendCommands("docker build -t test .");
         }
     }
 }

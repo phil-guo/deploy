@@ -27,24 +27,25 @@ namespace Deploy.Wpf.Views
             Utils.TextBoxCallback = DispatcherInvoke;
         }
 
-        public void Init(DeployOption deploy)
+        private void Init(DeployOption deploy)
         {
             Host.Text = deploy.Host;
             Port.Text = deploy.MapperPort;
             UserName.Text = deploy.Root;
             RemotePath.Text = deploy.RemotePath;
             Password.Text = deploy.Password;
+            LocalPath.Text = deploy.LocalPath;
             Display.Text = "";
         }
 
-        public void DispatcherInvoke(string appendText)
+        private void DispatcherInvoke(string appendText)
         {
             FrontTextBoxCallback = item => { Display.AppendText(appendText + Environment.NewLine); };
 
             Display.Dispatcher.Invoke(FrontTextBoxCallback, appendText);
         }
 
-        public void Execute()
+        private void Execute()
         {
             _logger.LogInformation("正在初始化 创建ssh,sftp 链接 ...");
             var sftp = Utils.Current.Resolve<ISftp>();

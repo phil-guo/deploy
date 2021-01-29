@@ -1,4 +1,5 @@
 ﻿using System.Collections.Concurrent;
+using System.Threading;
 using Deploy.Appliction.Config;
 using Microsoft.Extensions.Logging;
 
@@ -63,10 +64,9 @@ namespace Deploy.Appliction.Internal.Ssh
             SendCommands($"docker stop {dockerName}");
             SendCommands($"docker rm {dockerName}");
             SendCommands($"docker rmi {imageName}");
-            SendCommands($"docker build -t {imageName} .");
-
+            SendCommands($"cd {appConfig.RemotePath}; docker build -t {imageName} .");
             var runCmd =
-                $"docker run --name={dockerName} -itd -p {appConfig.MapperPort} --restart=always  {imageName}";
+                $"docker run --name={dockerName} -itd -p {appConfig.MapperPort} --restart=always {imageName}";
 
             SendCommands(runCmd);
         }
@@ -96,13 +96,9 @@ namespace Deploy.Appliction.Internal.Ssh
                 return;
             }
 
-            // var cmdOutput = ssh.GetReceivedText(channelNum, cmd);
-            // if (!ssh.LastMethodSuccess)
-            //     _logger.LogInformation(ssh.LastErrorText);
-            //
-            // _logger.LogInformation(cmdOutput);
+            _logger.LogInformation($"{cmd}  ---命令执行成功--");
 
-            _logger.LogInformation($"命令执行成功--{cmd}");
+            Thread.Sleep(1000);
         }
 
 

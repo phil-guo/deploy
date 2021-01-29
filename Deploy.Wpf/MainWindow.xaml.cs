@@ -70,7 +70,7 @@ namespace Deploy.Wpf
             serviceCollection.AddLogging();
 
             var configurationBuilder = new ConfigurationBuilder()
-                .SetBasePath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory ?? string.Empty, "config"))
+                .SetBasePath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory ?? string.Empty, "Config"))
                 .AddJsonFile("appsettings.json", optional: true);
             var configuration = configurationBuilder.Build();
             serviceCollection.AddSingleton<IConfiguration>(configuration);
