@@ -89,7 +89,7 @@ namespace Deploy.Appliction.Internal.Sftp
                 return;
             }
 
-            _logger.LogInformation("目录同步成功 ...");
+            _logger.LogInformation("目录同步成功,开始执行docker命令 ...");
         }
 
         public bool FileDirectoryExists(string path)
@@ -118,7 +118,7 @@ namespace Deploy.Appliction.Internal.Sftp
             var status = sftp.FileExists(path, followLinks);
 
             if (status == 2)
-                _logger.LogInformation("存在，是目录");
+                _logger.LogInformation("远程目录存在，开始同步本地目录 ...");
             return status == 2;
         }
 
@@ -139,7 +139,7 @@ namespace Deploy.Appliction.Internal.Sftp
                 return;
             }
 
-            _logger.LogInformation("远程文件目录创建成功");
+            _logger.LogInformation("远程文件目录创建成功，开始同步本地目录 ...");
         }
     }
 }
