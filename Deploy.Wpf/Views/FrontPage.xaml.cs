@@ -46,7 +46,6 @@ namespace Deploy.Wpf.Views
 
         public void Execute()
         {
-            _logger.LogInformation("开始运行...");
             _logger.LogInformation("正在初始化 创建ssh,sftp 链接 ...");
             var sftp = Appliction.Extensions.Utils.Current.Resolve<ISftp>();
             var ssh = Appliction.Extensions.Utils.Current.Resolve<ISsh>();
@@ -55,7 +54,7 @@ namespace Deploy.Wpf.Views
                 return;
 
             var config = AppConfig.Default.Deploy;
-            sftp.CreateFileDirectory(config.RemotePath);
+            // sftp.CreateFileDirectory(config.RemotePath);
         }
 
         private void Deploy_Click(object sender, RoutedEventArgs e)

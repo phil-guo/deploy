@@ -10,8 +10,8 @@ namespace Deploy.Appliction
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<ChilkatSsh>().As<ISsh>().SingleInstance();
-            builder.RegisterType<ChilkatSftp>().As<ISftp>().SingleInstance();
+            builder.RegisterType<ChilkatSsh>().As<ISsh>();
+            builder.RegisterType<ChilkatSftp>().As<ISftp>();
         }
     }
 }

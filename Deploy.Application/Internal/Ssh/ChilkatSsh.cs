@@ -17,7 +17,18 @@ namespace Deploy.Appliction.Internal.Ssh
         {
             _logger = logger;
             if (!SshDictionary.TryGetValue(Name, out var ssh))
+            {
+                ssh = CreateSshClient();
+                SshDictionary.TryAdd(Name, ssh);
+            }
+            
+            if (ssh != null)
+                _logger.LogInformation("ssh 链接创建成功");
+            else
+            {
+                SshDictionary.TryRemove(Name, out ssh);
                 SshDictionary.TryAdd(Name, CreateSshClient());
+            }
         }
 
         private Chilkat.Ssh CreateSshClient()
@@ -29,15 +40,18 @@ namespace Deploy.Appliction.Internal.Ssh
             var success = ssh.Connect(AppConfig.Default.Deploy.Host, AppConfig.Default.Deploy.Port);
 
             if (!success)
+            {
                 _logger.LogInformation($"链接服务器失败，请检查host 与 端口 ----- {ssh.LastErrorText}");
+                return null;
+            }
 
             success = ssh.AuthenticatePw(AppConfig.Default.Deploy.Root, AppConfig.Default.Deploy.Password);
 
             if (!success)
+            {
                 _logger.LogInformation($"链接服务器登录失败，请检查登录名与密码 ----- {ssh.LastErrorText}");
-
-            if (!success)
                 return null;
+            }
 
             return ssh;
         }

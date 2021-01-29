@@ -19,27 +19,44 @@ namespace Deploy.Appliction.Internal.Sftp
             _logger = logger;
 
             if (!SftpDictionary.TryGetValue(Name, out var sftp))
+            {
+                sftp = CreateSftp();
+                SftpDictionary.TryAdd(Name, sftp);
+            }
+
+            if (sftp != null)
+                _logger.LogInformation("ftp 链接创建成功");
+            else
+            {
+                SftpDictionary.TryRemove(Name, out sftp);
                 SftpDictionary.TryAdd(Name, CreateSftp());
+            }
         }
 
         private SFtp CreateSftp()
         {
             var sftp = new Chilkat.SFtp();
+            var config = AppConfig.Default.Deploy;
 
-            var success = sftp.Connect(AppConfig.Default.Deploy.Host, AppConfig.Default.Deploy.Port);
+            var success = sftp.Connect(config.Host, config.Port);
             if (!success)
                 _logger.LogInformation(sftp.LastErrorText);
 
-            success = sftp.AuthenticatePw(AppConfig.Default.Deploy.Root, AppConfig.Default.Deploy.Password);
+            success = sftp.AuthenticatePw(config.Root, config.Password);
 
             if (!success)
+            {
                 _logger.LogInformation(sftp.LastErrorText);
+                return null;
+            }
 
             success = sftp.InitializeSftp();
             if (!success)
+            {
                 _logger.LogInformation(sftp.LastErrorText);
-
-            return !success ? null : sftp;
+                return null;
+            }
+            return sftp;
         }
 
         public void SyncTreeUpload(string remotePath, string localPath)
@@ -105,6 +122,7 @@ namespace Deploy.Appliction.Internal.Sftp
                 _logger.LogInformation("sftp 没有创建链接");
                 return;
             }
+
             var success = sftp.CreateDir(path);
 
             if (!success)
