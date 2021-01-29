@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Logging;
 
-namespace Deploy.Wpf.Provider
+namespace Deploy.Appliction.Provider
 {
     public class LoggerDeployFactory : ILoggerProvider
     {

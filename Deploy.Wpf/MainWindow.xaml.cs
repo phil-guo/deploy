@@ -6,7 +6,7 @@ using System.Windows.Navigation;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Deploy.Appliction;
-using Deploy.Wpf.Provider;
+using Deploy.Appliction.Provider;
 using MahApps.Metro.Controls;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

@@ -1,9 +1,8 @@
 using System;
 using Deploy.Appliction.Extensions;
-using Deploy.Wpf.Views;
 using Microsoft.Extensions.Logging;
 
-namespace Deploy.Wpf.Provider
+namespace Deploy.Appliction.Provider
 {
     public class LoggerProvider : ILogger
     {
