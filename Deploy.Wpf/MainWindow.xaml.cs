@@ -101,5 +101,11 @@ namespace Deploy.Wpf
                 this.navigationServiceEx.Navigate(menuItem.NavigationDestination);
             }
         }
+      
+        //private void MetroWindow_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        //{
+        //    this.Loaded += (sender, args) =>
+        //      this.navigationServiceEx.Navigate(new Uri("Views/MainPage.xaml", UriKind.RelativeOrAbsolute));
+        //}
     }
 }

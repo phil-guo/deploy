@@ -97,8 +97,6 @@ namespace Deploy.Appliction.Internal.Ssh
             }
 
             _logger.LogInformation($"{cmd}  ---命令执行成功--");
-
-            Thread.Sleep(1000);
         }
 
 

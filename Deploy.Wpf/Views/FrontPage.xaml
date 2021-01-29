@@ -128,7 +128,7 @@
 
         <TextBox
             Name="Display"
-            Width="740"
+            Width="730"
             Height="300"
             Margin="10,0,10,10"
             VerticalAlignment="Bottom"
