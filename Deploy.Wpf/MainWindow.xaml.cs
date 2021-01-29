@@ -1,10 +1,14 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Navigation;
 using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using Deploy.Appliction;
 using MahApps.Metro.Controls;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Deploy.Wpf
 {
@@ -28,7 +32,6 @@ namespace Deploy.Wpf
             // Navigate to the home page.
             this.Loaded += (sender, args) =>
                 this.navigationServiceEx.Navigate(new Uri("Views/MainPage.xaml", UriKind.RelativeOrAbsolute));
-            
         }
 
         private void NavigationServiceEx_OnNavigated(object sender, NavigationEventArgs e)
@@ -60,8 +63,20 @@ namespace Deploy.Wpf
         private void SetUpContainer()
         {
             var builder = new ContainerBuilder();
+
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddLogging();
+
+            var configurationBuilder = new ConfigurationBuilder()
+                .SetBasePath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory ?? string.Empty, "config"))
+                .AddJsonFile("appsettings.json", optional: true);
+            var configuration = configurationBuilder.Build();
+            serviceCollection.AddSingleton<IConfiguration>(configuration);
+            
+            builder.Populate(serviceCollection);
+            
             BuildUpContainer(builder);
-            var container = builder.Build();
+            Appliction.Extensions.Utils.Current = builder.Build();
         }
 
         private void BuildUpContainer(ContainerBuilder builder)

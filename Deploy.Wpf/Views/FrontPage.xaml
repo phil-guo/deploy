@@ -100,6 +100,21 @@
                  Margin="430,40,0,0"
                  HorizontalAlignment="Left"
                  VerticalAlignment="Top" />
+        
+        <Label Width="70"
+               Height="30"
+               Margin="10,70,0,0"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top">
+            挂载卷：
+        </Label>
+        <TextBox mah:TextBoxHelper.Watermark="宿主机:容器目录（多个卷用;隔开）"
+                 Name="Volume"
+                 Width="550"
+                 Height="20"
+                 Margin="80,70,0,0"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top" />
 
         <Button Width="80"
                 Height="30"
@@ -119,9 +134,6 @@
             VerticalAlignment="Bottom"
             TextWrapping="Wrap"
             VerticalScrollBarVisibility="Visible"
-            AcceptsReturn="True"
-            >
-            <!-- 你奶发生的看哈肯定会发客 \r\n 大水饭卡手动阀十分卡回复框上的饭卡上返回 -->
-        </TextBox>
+            AcceptsReturn="True" />
     </Grid>
 </Page>
