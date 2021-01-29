@@ -7,10 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Deploy.Appliction\Deploy.Appliction.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
       <PackageReference Include="MahApps.Metro" Version="2.4.3" />
       <PackageReference Include="MahApps.Metro.IconPacks" Version="4.8.0" />
       <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.11" />
@@ -30,6 +26,10 @@
       <None Update="Config\front\nginx.conf">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Deploy.Application\Deploy.Application.csproj" />
     </ItemGroup>
 
 </Project>

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Deploy.Appliction", "Deploy.Appliction\Deploy.Appliction.csproj", "{FE21C1CC-9394-48DD-A1FF-93123BE7E660}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Deploy.Application", "Deploy.Application\Deploy.Application.csproj", "{FE21C1CC-9394-48DD-A1FF-93123BE7E660}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Deploy.Wpf", "Deploy.Wpf\Deploy.Wpf.csproj", "{72A803C5-0A58-44BC-85EA-2EB6766C5C51}"
 EndProject

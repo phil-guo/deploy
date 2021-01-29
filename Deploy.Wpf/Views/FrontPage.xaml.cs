@@ -1,8 +1,11 @@
 using System;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using Autofac;
 using Deploy.Appliction.Config;
+using Deploy.Appliction.Extensions;
 using Deploy.Appliction.Internal;
 using Microsoft.Extensions.Logging;
 
@@ -10,14 +13,18 @@ namespace Deploy.Wpf.Views
 {
     public partial class FrontPage
     {
-        // private readonly ISftp _sftp;
-        private readonly ISsh _ssh;
+        public Action<string> FrontTextBoxCallback;
+        private readonly ILogger<FrontPage> _logger;
 
         public FrontPage()
         {
             InitializeComponent();
 
             Init(AppConfig.Default.Deploy);
+
+            _logger = Utils.Current.Resolve<ILogger<FrontPage>>();
+
+            Utils.TextBoxCallback = DispatcherInvoke;
         }
 
         public void Init(DeployOption deploy)
@@ -30,12 +37,31 @@ namespace Deploy.Wpf.Views
             Display.Text = "";
         }
 
-        private void Deploy_Click(object sender, RoutedEventArgs e)
+        public void DispatcherInvoke(string appendText)
         {
+            FrontTextBoxCallback = item => { Display.AppendText(appendText + Environment.NewLine); };
+
+            Display.Dispatcher.Invoke(FrontTextBoxCallback, appendText);
+        }
+
+        public void Execute()
+        {
+            _logger.LogInformation("开始运行...");
+            _logger.LogInformation("正在初始化 创建ssh,sftp 链接 ...");
             var sftp = Appliction.Extensions.Utils.Current.Resolve<ISftp>();
+            var ssh = Appliction.Extensions.Utils.Current.Resolve<ISsh>();
 
             if (!FileExists())
                 return;
+
+            var config = AppConfig.Default.Deploy;
+            sftp.CreateFileDirectory(config.RemotePath);
+        }
+
+        private void Deploy_Click(object sender, RoutedEventArgs e)
+        {
+            Display.Text = "";
+            Task.Factory.StartNew(Execute);
         }
 
         private bool FileExists()

@@ -6,9 +6,11 @@ using System.Windows.Navigation;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Deploy.Appliction;
+using Deploy.Wpf.Provider;
 using MahApps.Metro.Controls;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Deploy.Wpf
 {
@@ -72,11 +74,14 @@ namespace Deploy.Wpf
                 .AddJsonFile("appsettings.json", optional: true);
             var configuration = configurationBuilder.Build();
             serviceCollection.AddSingleton<IConfiguration>(configuration);
-            
+
             builder.Populate(serviceCollection);
-            
+
             BuildUpContainer(builder);
             Appliction.Extensions.Utils.Current = builder.Build();
+
+            var loggerFactory = Appliction.Extensions.Utils.Current.Resolve<ILoggerFactory>();
+            loggerFactory.AddProvider(new LoggerDeployFactory());
         }
 
         private void BuildUpContainer(ContainerBuilder builder)
