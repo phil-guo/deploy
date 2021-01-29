@@ -21,7 +21,7 @@ namespace Deploy.Appliction.Internal.Ssh
                 ssh = CreateSshClient();
                 SshDictionary.TryAdd(Name, ssh);
             }
-            
+
             if (ssh != null)
                 _logger.LogInformation("ssh 链接创建成功");
             else
@@ -56,6 +56,21 @@ namespace Deploy.Appliction.Internal.Ssh
             return ssh;
         }
 
+        public void ExecuteFrontCmd(string dockerName, string imageName)
+        {
+            var appConfig = AppConfig.Default.Deploy;
+
+            SendCommands($"docker stop {dockerName}");
+            SendCommands($"docker rm {dockerName}");
+            SendCommands($"docker rmi {imageName}");
+            SendCommands($"docker build -t {imageName} .");
+
+            var runCmd =
+                $"docker run --name={dockerName} -itd -p {appConfig.MapperPort} --restart=always  {imageName}";
+
+            SendCommands(runCmd);
+        }
+
         public void SendCommands(string cmd)
         {
             SshDictionary.TryGetValue(Name, out var ssh);
@@ -69,17 +84,25 @@ namespace Deploy.Appliction.Internal.Ssh
             var success = ssh.SendReqExec(channelNum, cmd);
 
             if (!success)
+            {
                 _logger.LogInformation(ssh.LastErrorText);
+                return;
+            }
 
             success = ssh.ChannelReceiveToClose(channelNum);
             if (!success)
+            {
                 _logger.LogInformation(ssh.LastErrorText);
+                return;
+            }
 
             // var cmdOutput = ssh.GetReceivedText(channelNum, cmd);
             // if (!ssh.LastMethodSuccess)
             //     _logger.LogInformation(ssh.LastErrorText);
             //
             // _logger.LogInformation(cmdOutput);
+
+            _logger.LogInformation($"命令执行成功--{cmd}");
         }
 
 

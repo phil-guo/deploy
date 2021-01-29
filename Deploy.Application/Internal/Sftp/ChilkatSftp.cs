@@ -56,6 +56,7 @@ namespace Deploy.Appliction.Internal.Sftp
                 _logger.LogInformation(sftp.LastErrorText);
                 return null;
             }
+
             return sftp;
         }
 
@@ -83,7 +84,12 @@ namespace Deploy.Appliction.Internal.Sftp
             var success = sftp.SyncTreeUpload(localPath, remotePath, mode, recursive);
 
             if (!success)
+            {
                 _logger.LogInformation(sftp.LastErrorText);
+                return;
+            }
+
+            _logger.LogInformation("目录同步成功 ...");
         }
 
         public bool FileDirectoryExists(string path)
@@ -111,6 +117,8 @@ namespace Deploy.Appliction.Internal.Sftp
             var followLinks = true;
             var status = sftp.FileExists(path, followLinks);
 
+            if (status == 2)
+                _logger.LogInformation("存在，是目录");
             return status == 2;
         }
 
@@ -126,7 +134,12 @@ namespace Deploy.Appliction.Internal.Sftp
             var success = sftp.CreateDir(path);
 
             if (!success)
+            {
                 _logger.LogInformation(sftp.LastErrorText);
+                return;
+            }
+
+            _logger.LogInformation("远程文件目录创建成功");
         }
     }
 }

@@ -47,14 +47,23 @@ namespace Deploy.Wpf.Views
         public void Execute()
         {
             _logger.LogInformation("正在初始化 创建ssh,sftp 链接 ...");
-            var sftp = Appliction.Extensions.Utils.Current.Resolve<ISftp>();
-            var ssh = Appliction.Extensions.Utils.Current.Resolve<ISsh>();
+            var sftp = Utils.Current.Resolve<ISftp>();
+            var ssh = Utils.Current.Resolve<ISsh>();
 
             if (!FileExists())
                 return;
 
             var config = AppConfig.Default.Deploy;
-            // sftp.CreateFileDirectory(config.RemotePath);
+
+            //todo 创建远程目录
+            if (!sftp.FileDirectoryExists(config.RemotePath))
+                sftp.CreateFileDirectory(config.RemotePath);
+
+            //todo 同步本地目录到远程目录
+            sftp.SyncTreeUpload(config.RemotePath, config.LocalPath);
+            
+            //todo 开始执行shell 命令
+            ssh.ExecuteFrontCmd("test","test");
         }
 
         private void Deploy_Click(object sender, RoutedEventArgs e)
@@ -72,13 +81,13 @@ namespace Deploy.Wpf.Views
             //todo 判断dockerfile文件跟 nginx 配置文件是否存在
             if (!File.Exists(Path.Combine(frontPath, "Dockerfile")))
             {
-                Display.SelectedText += $"dockerfile文件不存在{Environment.NewLine}";
+                _logger.LogInformation("dockerfile文件不存在");
                 return false;
             }
 
             if (!File.Exists(Path.Combine(frontPath, "nginx.conf")))
             {
-                Display.SelectedText += $"nginx.conf文件不存在{Environment.NewLine}";
+                _logger.LogInformation("nginx.conf文件不存在");
                 return false;
             }
 
