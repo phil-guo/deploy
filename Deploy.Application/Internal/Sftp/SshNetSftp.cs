@@ -4,6 +4,7 @@ using System.IO;
 using System.Text;
 using Deploy.Appliction.Config;
 using Deploy.Appliction.Extensions;
+using Microsoft.Extensions.Logging;
 using Renci.SshNet;
 
 namespace Deploy.Appliction.Internal.Sftp
@@ -13,6 +14,13 @@ namespace Deploy.Appliction.Internal.Sftp
         public Dictionary<string, SftpClient> Dictionary = new Dictionary<string, SftpClient>();
 
         private const string Name = "SShNetSftp";
+
+        private readonly ILogger<SshNetSftp> _logger;
+
+        public SshNetSftp(ILogger<SshNetSftp> logger)
+        {
+            _logger = logger;
+        }
 
         public SftpClient CreateSftpClient()
         {
@@ -42,21 +50,31 @@ namespace Deploy.Appliction.Internal.Sftp
 
                 using var sftp = CreateSftpClient();
                 sftp.Connect();
+                _logger.LogInformation("创建sfp链接成功");
 
                 //todo 创建目录
+                _logger.LogInformation("开始检查目录 ...");
                 if (!sftp.Exists(remotePath))
+                {
                     sftp.CreateDirectory(remotePath);
+                    _logger.LogInformation($"目录  {remotePath}   创建成功 ...");
+                }
 
                 sftp.SynchronizeDirectories(localPath, remotePath, "*.*");
+                _logger.LogInformation($"本地目录  {localPath}   同步远程目录 {remotePath} 成功 ...");
 
                 directory.ForEach(item =>
                 {
                     var path = item.Replace(localPath, remotePath);
                     path = path.Replace("\\", "/");
                     if (!sftp.Exists(path))
+                    {
                         sftp.CreateDirectory(path);
+                        _logger.LogInformation($"目录  {path}   创建成功 ...");
+                    }
 
                     sftp.SynchronizeDirectories(item, path, "*.*");
+                    _logger.LogInformation($"本地目录  {item}   同步远程目录 {path} 成功 ...");
                 });
             });
         }
