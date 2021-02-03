@@ -22,11 +22,11 @@ namespace Deploy.Test
             var remotePath = "/home/wwwroot";
             _sftp.SyncTreeUpload(remotePath, localPath);
         }
-
-        [Fact(DisplayName = "创建文件目录")]
-        public void CreateDir_Test()
-        {
-            _sftp.CreateFileDirectory("/home/wwwroot");
-        }
+        //
+        // [Fact(DisplayName = "创建文件目录")]
+        // public void CreateDir_Test()
+        // {
+        //     _sftp.CreateFileDirectory("/home/wwwroot");
+        // }
     }
 }

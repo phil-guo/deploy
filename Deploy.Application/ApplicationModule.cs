@@ -14,7 +14,7 @@ namespace Deploy.Appliction
             builder.RegisterType<ChilkatSsh>().Named<ISsh>(StrategyDll.Chilkat.ToString());
             builder.RegisterType<ChilkatSftp>().Named<ISftp>(StrategyDll.Chilkat.ToString());
 
-            //builder.RegisterType<SshNetSftp>().Named<ISsh>(StrategyDll.SSHNET.ToString());
+            builder.RegisterType<SshNet>().Named<ISsh>(StrategyDll.SSHNET.ToString());
             builder.RegisterType<SshNetSftp>().Named<ISftp>(StrategyDll.SSHNET.ToString());
         }
     }

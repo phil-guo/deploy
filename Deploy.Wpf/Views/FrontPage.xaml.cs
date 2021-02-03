@@ -7,6 +7,7 @@ using Autofac;
 using Deploy.Appliction.Config;
 using Deploy.Appliction.Extensions;
 using Deploy.Appliction.Internal;
+using Deploy.Appliction.Internal.Model;
 using Microsoft.Extensions.Logging;
 
 namespace Deploy.Wpf.Views
@@ -15,6 +16,8 @@ namespace Deploy.Wpf.Views
     {
         public Action<string> FrontTextBoxCallback;
         private readonly ILogger<FrontPage> _logger;
+        private readonly ISftp _sftp;
+        private readonly ISsh _ssh;
 
         public FrontPage()
         {
@@ -25,6 +28,9 @@ namespace Deploy.Wpf.Views
             _logger = Utils.Current.Resolve<ILogger<FrontPage>>();
 
             Utils.TextBoxCallback = DispatcherInvoke;
+
+            _sftp = Utils.Current.ResolveNamed<ISftp>(StrategyDll.SSHNET.ToString());
+            _ssh = Utils.Current.ResolveNamed<ISsh>(StrategyDll.SSHNET.ToString());
         }
 
         private void Init(DeployOption deploy)
@@ -47,24 +53,19 @@ namespace Deploy.Wpf.Views
 
         private void Execute()
         {
-            _logger.LogInformation("正在初始化 创建ssh,sftp 链接 ...");
-            var sftp = Utils.Current.Resolve<ISftp>();
-            var ssh = Utils.Current.Resolve<ISsh>();
+            // _logger.LogInformation("正在初始化 创建ssh,sftp 链接 ...");
+            // var ssh = Utils.Current.Resolve<ISsh>();
 
             if (!FileExists())
                 return;
 
             var config = AppConfig.Default.Deploy;
 
-            //todo 创建远程目录
-            if (!sftp.FileDirectoryExists(config.RemotePath))
-                sftp.CreateFileDirectory(config.RemotePath);
-
             //todo 同步本地目录到远程目录
-            sftp.SyncTreeUpload(config.RemotePath, config.LocalPath);
-            
-            //todo 开始执行shell 命令
-            ssh.ExecuteFrontCmd("test","test");
+            _sftp.SyncTreeUpload(config.RemotePath, config.LocalPath);
+
+            // //todo 开始执行shell 命令
+            _ssh.ExecuteFrontCmd("mytest", "mytest");
         }
 
         private void Deploy_Click(object sender, RoutedEventArgs e)

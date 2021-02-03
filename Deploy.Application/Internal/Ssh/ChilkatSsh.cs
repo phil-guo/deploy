@@ -2,6 +2,7 @@
 using System.Threading;
 using Deploy.Appliction.Config;
 using Microsoft.Extensions.Logging;
+using Renci.SshNet;
 
 namespace Deploy.Appliction.Internal.Ssh
 {
@@ -55,6 +56,11 @@ namespace Deploy.Appliction.Internal.Ssh
             }
 
             return ssh;
+        }
+
+        public void SendCommand(SshClient ssh, string cmd)
+        {
+            throw new System.NotImplementedException();
         }
 
         public void ExecuteFrontCmd(string dockerName, string imageName)
