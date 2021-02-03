@@ -1,5 +1,6 @@
 using Autofac;
 using Deploy.Appliction.Internal;
+using Deploy.Appliction.Internal.Model;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -11,13 +12,13 @@ namespace Deploy.Test
 
         public Sftp_Test(ITestOutputHelper output) : base(output)
         {
-            _sftp = Container.Resolve<ISftp>();
+            _sftp = Container.ResolveNamed<ISftp>(StrategyDll.SSHNET.ToString());
         }
 
         [Fact(DisplayName = "同步目录树")]
         public void SyncTreeUpload_Test()
         {
-            var localPath = @"D:\Code\test";
+            var localPath = @"D:\test";
             var remotePath = "/home/wwwroot";
             _sftp.SyncTreeUpload(remotePath, localPath);
         }
