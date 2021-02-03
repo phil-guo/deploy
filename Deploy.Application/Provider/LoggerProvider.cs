@@ -18,7 +18,7 @@ namespace Deploy.Appliction.Provider
         {
             var message = formatter(state, exception).ToString();
 
-            //Utils.TextBoxCallback(message);
+            Utils.TextBoxCallback(message);
         }
 
         public bool IsEnabled(LogLevel logLevel)
